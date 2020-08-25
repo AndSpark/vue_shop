@@ -44,3 +44,13 @@ export function deleteUser(id) {
 		url: `users/${id}`,
 	})
 }
+
+export function setRole_(id, rid) {
+	return axios({
+		method: 'put',
+		url: `users/${id}/role`,
+		data: {
+			rid,
+		},
+	})
+}

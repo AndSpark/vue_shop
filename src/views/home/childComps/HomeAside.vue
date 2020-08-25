@@ -1,5 +1,5 @@
 <template>
-  <nav-menu-aside :menus="menus" :iconList="iconList"></nav-menu-aside>
+  <nav-menu-aside :menus="menus" :iconList="iconList" v-if="menus.length !== 0"></nav-menu-aside>
 </template>
 
 <script>

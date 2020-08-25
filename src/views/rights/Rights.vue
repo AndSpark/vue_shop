@@ -1,86 +1,58 @@
 <template>
   <div>
-    <dialog-edit ref="dialog" v-model="oform" @sure="$refs.dialog.dialogFormVisible = false"></dialog-edit>
-    <button @click="$refs.dialog.dialogFormVisible = true">shosho</button>
+    <el-card>
+      <el-table :data="data" style="width: 100%" stripe border size="small">
+        <el-table-column type="index"></el-table-column>
+        <el-table-column prop="authName" label="权限名称"></el-table-column>
+        <el-table-column prop="path" label="路径"></el-table-column>
+        <el-table-column prop="level" label="权限等级">
+          <template #default="{row}">
+            <el-tag :type="color(row.level)">{{level(row.level)}}</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
 <script>
-import DialogEdit from "@/components/content/dialog/DialogEdit";
-
+import { getRightsList } from "@/network/rights";
 export default {
   name: "Rights",
   data() {
-    var checkEmail = (rule, value, callback) => {
-      const regEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-      if (regEmail.test(value)) {
-        return callback();
-      }
-      callback(new Error("请输入合法邮箱"));
-    };
-
-    var checkPhone = (rule, value, callback) => {
-      var regPhone = /^[1][3,4,5,7,8][0-9]{9}$/;
-      if (regPhone.test(value)) {
-        return callback();
-      }
-
-      callback(new Error("请输入正确的手机号"));
-    };
     return {
-      ishow: false,
-      oform: {
-        title: "添加用户",
-        list: ["用户名称", "用户密码", "邮箱", "手机号"],
-        rules: {
-          username: [
-            { required: true, message: "请输入用户名", trigger: "blur" },
-            {
-              min: 3,
-              max: 10,
-              message: "长度在 3 到 10 个字符",
-              trigger: "blur",
-            },
-          ],
-          password: [
-            {
-              required: true,
-              message: "请输入密码",
-              trigger: "blur",
-            },
-            {
-              min: 6,
-              max: 15,
-              message: "长度在 6 到 15 个字符",
-              trigger: "blur",
-            },
-          ],
-          email: [
-            { required: true, message: "请输入邮箱", trigger: "blur" },
-            {
-              validator: checkEmail,
-              trigger: "blur",
-            },
-          ],
-          mobile: [
-            { required: true, message: "请输入手机号", trigger: "blur" },
-            {
-              validator: checkPhone,
-              trigger: "blur",
-            },
-          ],
-        },
-        data: {
-          username: "",
-          password: "",
-          email: "",
-          mobile: "",
-        },
-      },
+      data: [],
     };
   },
-  components: {
-    DialogEdit,
+  created() {
+    this.rightsList();
+  },
+  methods: {
+    async rightsList() {
+      let res = await getRightsList("list");
+      if (res.meta.status !== 200) return this.$message.error(res.meta.status);
+      this.data = res.data;
+    },
+    level(n) {
+      switch (n) {
+        case "0":
+          return "一级";
+        case "1":
+          return "二级";
+        case "2":
+          return "三级";
+      }
+    },
+    color(n) {
+      switch (n) {
+        case "0":
+          return "";
+        case "1":
+          return "success";
+        case "2":
+          return "warning";
+      }
+    },
   },
 };
 </script>

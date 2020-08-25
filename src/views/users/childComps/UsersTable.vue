@@ -44,7 +44,6 @@
             size="mini"
             @click="showEditDialog(row)"
           ></el-button>
-
           <el-button
             type="danger"
             circle
@@ -53,11 +52,42 @@
             @click="showDeleteDiglog(row.id)"
           ></el-button>
           <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-            <el-button type="warning" circle icon="el-icon-setting" size="mini"></el-button>
+            <el-button
+              type="warning"
+              circle
+              icon="el-icon-setting"
+              size="mini"
+              @click="showSetDialog(row)"
+            ></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="分配角色" :visible.sync="show" width="width" @close="role_id = '请选择'">
+      <div>
+        <p>
+          <span>当前的用户：{{setrow.username}}</span>
+        </p>
+        <p>
+          <span>当前的角色：{{setrow.role_name}}</span>
+        </p>
+        <p>
+          <span>分配新角色：</span>
+          <el-select v-model="role_id" size="mini">
+            <el-option
+              v-for="item in roles"
+              :value="item.id"
+              :key="item.roleName"
+              :label="item.roleName"
+            ></el-option>
+          </el-select>
+        </p>
+      </div>
+      <div slot="footer">
+        <el-button @click="show = false">取 消</el-button>
+        <el-button type="primary" @click="setRole">确 定</el-button>
+      </div>
+    </el-dialog>
     <!-- 页码 -->
     <el-pagination
       @size-change="handleSizeChange"
@@ -81,7 +111,9 @@ import {
   createUser,
   editUser,
   deleteUser,
+  setRole_,
 } from "@/network/users";
+import { getRolesList } from "@/network/rights";
 export default {
   name: "UsersTable",
   components: {
@@ -105,6 +137,10 @@ export default {
     };
 
     return {
+      role_id: "请选择",
+      roles: [],
+      setrow: {},
+      show: false,
       params: {
         query: "",
         pagenum: 1,
@@ -218,8 +254,9 @@ export default {
     },
     addUser(formData) {
       formData.validate(async (v, p) => {
+        console.log(v, p);
         if (!v) return this.$message.error(Object.values(p)[0][0].message);
-        let res = await createUser(this.form.data);
+        let res = await createUser(this.formAdd.data);
         if (res.meta.status !== 201) return this.$message.error(res.meta.msg);
         this.$message.success(res.meta.msg);
         this.getUsers();
@@ -269,6 +306,20 @@ export default {
           });
         });
     },
+    async showSetDialog(row) {
+      this.setrow = row;
+      this.show = true;
+      let res = await getRolesList();
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
+      this.roles = res.data;
+    },
+    async setRole() {
+      let res = await setRole_(this.setrow.id, this.role_id);
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
+      this.getUsers();
+      this.$message.success(res.meta.msg);
+      this.show = false;
+    },
   },
 };
 </script>
@@ -282,5 +333,8 @@ export default {
   .el-pagination {
     margin-top: 15px;
   }
+}
+p {
+  padding: 5px 0;
 }
 </style>

@@ -4,7 +4,7 @@
       <div class="home-title">
         <img src="@/assets/logo.png" alt />
         <router-link to="/home">
-          <h2>电商后台管理系统</h2>
+          <h2>后台管理系统</h2>
         </router-link>
       </div>
       <el-button type="info" @click="logout" plain round>退出</el-button>
@@ -14,6 +14,11 @@
         <home-aside></home-aside>
       </el-aside>
       <el-main>
+        <el-breadcrumb separator-class="el-icon-arrow-right" v-if="$route.path != '/welcome'">
+          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>{{$store.state.path.path1}}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{$store.state.path.path2}}</el-breadcrumb-item>
+        </el-breadcrumb>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -72,6 +77,11 @@ export default {
   .el-aside {
     background-color: #e1f5f6;
     box-shadow: 2px 4px 2px 1px #aaa;
+  }
+
+  .el-breadcrumb {
+    font-size: 14px;
+    margin-bottom: 15px;
   }
 }
 </style>

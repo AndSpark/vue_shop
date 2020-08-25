@@ -1,5 +1,5 @@
 <template>
-  <div v-if="menus.length !== 0">
+  <div>
     <p @click="isCollapse = !isCollapse" class="collapse">
       <i class="el-icon-s-fold" v-show="!isCollapse"></i>
       <i class="el-icon-s-unfold" v-show="isCollapse"></i>
@@ -22,6 +22,7 @@
           v-for="childMenu in menu.children"
           :key="childMenu.id"
           :index="`${childMenu.path}`"
+          @click="up(childMenu.path)"
         >
           <i class="el-icon-menu"></i>
           <span>{{ childMenu.authName }}</span>
@@ -61,7 +62,27 @@ export default {
       immediate: true,
     },
   },
-  computed: {},
+  created() {
+    this.$store.commit(
+      "currentPath",
+      this.currentPath(this.$route.path.substr(1))
+    );
+  },
+  methods: {
+    up(path) {
+      this.$store.commit("currentPath", this.currentPath(path));
+    },
+    currentPath(path) {
+      let menu = this.menus.filter((v) => {
+        return v.children.find((x) => {
+          return x.path == path;
+        });
+      })[0];
+      let path1 = menu.authName;
+      let path2 = menu.children.find((x) => x.path == path).authName;
+      return { path1, path2 };
+    },
+  },
 };
 </script>
 
