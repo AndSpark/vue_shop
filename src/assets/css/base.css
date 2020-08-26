@@ -6,8 +6,6 @@ html {
   min-width: 1366px;
 }
 
-span {
-
-  font-size: 12px !important;
-
+.el-cascader-panel {
+  height: 250px;
 }
