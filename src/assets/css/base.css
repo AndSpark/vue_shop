@@ -6,6 +6,24 @@ html {
   min-width: 1366px;
 }
 
+.input-new-tag input {
+  height: 24px !important;
+}
+
 .el-cascader-panel {
-  height: 250px;
+  height: 180px;
+}
+
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+}
+
+.el-alert {
+  padding: 4px 8px !important;
+}
+
+.el-alert span {
+  font-size: 12px !important;
+
 }
