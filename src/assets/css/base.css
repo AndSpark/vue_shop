@@ -1,35 +1,33 @@
 html {
-  font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', Arial,
+		sans-serif;
 }
 
 #app {
-  min-width: 1366px;
+	min-width: 1366px;
 }
 
 .input-new-tag input {
-  height: 24px !important;
+	height: 24px !important;
 }
 
-
-
 .el-cascader-panel {
-  height: 180px;
+	height: 180px;
 }
 
 .el-scrollbar__wrap {
-  overflow-x: hidden !important;
-  overflow-y: scroll !important;
+	overflow-x: hidden !important;
+	overflow-y: scroll !important;
 }
 
 .el-alert {
-  padding: 4px 8px !important;
+	padding: 4px 8px !important;
 }
 
 .el-alert span {
-  font-size: 12px !important;
-
+	font-size: 12px !important;
 }
 
 .ql-editor {
-  min-height: 300px;
+	min-height: 300px;
 }
