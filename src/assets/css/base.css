@@ -10,6 +10,8 @@ html {
   height: 24px !important;
 }
 
+
+
 .el-cascader-panel {
   height: 180px;
 }
@@ -26,4 +28,8 @@ html {
 .el-alert span {
   font-size: 12px !important;
 
+}
+
+.ql-editor {
+  min-height: 300px;
 }

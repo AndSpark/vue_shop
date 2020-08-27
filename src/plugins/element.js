@@ -38,8 +38,26 @@ import {
 	Alert,
 	Tabs,
 	TabPane,
+	Steps,
+	Step,
+	Collapse,
+	CollapseItem,
+	Checkbox,
+	CheckboxGroup,
+	CheckboxButton,
+	Upload,
+	Image,
 } from 'element-ui'
 
+Vue.use(Image)
+Vue.use(Upload)
+Vue.use(CheckboxButton)
+Vue.use(CheckboxGroup)
+Vue.use(Checkbox)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
+Vue.use(Step)
+Vue.use(Steps)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Button)

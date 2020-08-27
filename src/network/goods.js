@@ -69,3 +69,34 @@ export function delelteAttr_(id) {
 		url: `categories/${id.cat_id}/attributes/${id.attr_id}`,
 	})
 }
+
+export function goodsList_(params) {
+	return axios({
+		url: 'goods',
+		params,
+	})
+}
+
+export function deleteGoods_(id) {
+	return axios({
+		method: 'delete',
+		url: `goods/${id}`,
+	})
+}
+
+export function addGood_(data) {
+	return axios({
+		method: 'post',
+		url: 'goods',
+		data: {
+			goods_name: data.goods_name,
+			goods_cat: data.goods_cat,
+			goods_price: data.goods_price,
+			goods_number: data.goods_number,
+			goods_weight: data.goods_weight,
+			goods_introduce: data.goods_introduce,
+			pics: data.pics,
+			attrs: data.attrs,
+		},
+	})
+}

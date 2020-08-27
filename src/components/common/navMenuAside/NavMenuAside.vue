@@ -63,6 +63,12 @@ export default {
     },
   },
   created() {
+    if (this.$route.path == "/add") {
+      return this.$store.commit("currentPath", {
+        path1: "商品管理",
+        path2: "添加商品",
+      });
+    }
     this.$store.commit(
       "currentPath",
       this.currentPath(this.$route.path.substr(1))
